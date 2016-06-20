@@ -1,0 +1,26 @@
+{
+  "name": "babel-plugin-react-native-css-class",
+  "version": "0.0.1",
+  "description": "Use class tag in React Native Component",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apentle/babel-plugin-react-native-css-class.git"
+  },
+  "keywords": [
+    "react-native-css",
+    "css-class",
+    "react-native",
+    "styles",
+    "css"
+  ],
+  "author": "Doan Nguyen <doannd@apentle.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/apentle/babel-plugin-react-native-css-class/issues"
+  },
+  "homepage": "https://github.com/apentle/babel-plugin-react-native-css-class#readme"
+}
