@@ -13,7 +13,7 @@ class Config extends Component {
         </Text>
         <Text class="instructions">
         </Text>
-        <Text class="instructions" style={{color: red}}>
+        <Text class="instructions" style={{color: 'red'}}>
         </Text>
       </View>
     );

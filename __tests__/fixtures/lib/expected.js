@@ -12,14 +12,14 @@ class Lib extends Component {
         </Text>
         <Text style={_apTheme.styles.instructions}>
         </Text>
-        <Text style={[_apTheme.styles.instructions, { color: red }]}>
+        <Text style={[_apTheme.styles.instructions, { color: 'red' }]}>
         </Text>
       {this.props.results.map(function (result) {
         return <Text style={_apTheme.css('result-' + result.id)}>{result.text}</Text>;
       })}
         <Text style={_apTheme.css([this.props.status])}>
         </Text>
-        <Text style={[_apTheme.css(this.props.status), { color: black }]}>
+        <Text style={[_apTheme.css(this.props.status), { color: 'black' }]}>
         </Text>
       </View>;
   }

@@ -12,7 +12,7 @@ class Config extends Component {
         </Text>
         <Text style={theme.styles.instructions}>
         </Text>
-        <Text style={[theme.styles.instructions, { color: red }]}>
+        <Text style={[theme.styles.instructions, { color: 'red' }]}>
         </Text>
       </View>;
   }
