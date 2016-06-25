@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "5"
+  - "5.1"
+  - "4.2"
+
+install:
+  - npm install
+  - npm install --only=dev
+
+branches:
+  only:
+    - master

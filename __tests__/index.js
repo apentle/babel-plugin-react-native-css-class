@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const babel = require('babel-core');
 
-const pluginPath = require.resolve('../build');
+const pluginPath = require.resolve('../lib');
 
 // Run each test case
 var error = 0;

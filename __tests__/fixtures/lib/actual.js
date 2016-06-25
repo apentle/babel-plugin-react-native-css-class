@@ -2,7 +2,7 @@
 
 import React, { Component, StyleSheet, Text, View } from 'react-native';
 
-class Inline extends Component {
+class Lib extends Component {
   render() {
     return (
       <View style={styles.container} class="body">
@@ -14,23 +14,16 @@ class Inline extends Component {
         </Text>
         <Text class="instructions" style={{color: red}}>
         </Text>
-        <Text class=" ">
+      {this.props.results.map(function(result) {
+        return <Text class={'result-' + result.id}>{result.text}</Text>;
+      })}
+        <Text class={[this.props.status]}>
         </Text>
-        <Text class={styles.instructions}>
-        </Text>
-        <Text class={[styles.header, styles.intent]} style={styles.strong}>
+        <Text class={this.props.status} style={{color: black}}>
         </Text>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  body: {},
-  container: {},
-  instructions: {},
-  strong: {},
-  intent: {},
-});
-
-module.exports = Inline;
+module.exports = Lib;

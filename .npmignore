@@ -7,3 +7,6 @@ Example
 # DEV Enviroment
 __tests__
 .travis.yml
+
+# Source Code
+src

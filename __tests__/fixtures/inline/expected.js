@@ -9,9 +9,15 @@ class Inline extends Component {
         </Text>
         <Text style={styles.instructions}>
         </Text>
-        <Text style={[styles.instructions]}>
+        <Text style={styles.instructions}>
         </Text>
         <Text style={[styles.instructions, { color: red }]}>
+        </Text>
+        <Text>
+        </Text>
+        <Text style={styles.instructions}>
+        </Text>
+        <Text style={[styles.header, styles.intent, styles.strong]}>
         </Text>
       </View>;
   }

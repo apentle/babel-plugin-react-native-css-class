@@ -1,16 +1,15 @@
 {
   "name": "babel-plugin-react-native-css-class",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Use class tag in React Native Component",
-  "main": "build/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "build": "babel --presets es2015 --plugins transform-runtime src --out-dir build",
+    "build": "babel --presets es2015 --plugins transform-runtime src --out-dir lib",
     "test": "npm run build && node __tests__",
     "prepublish": "npm run build"
   },
   "dependencies": {
-    "babel-runtime": "^6.3.19",
-    "babylon": "^6.8.1"
+    "babel-runtime": "^6.3.19"
   },
   "devDependencies": {
     "babel-cli": "^6.3.17",

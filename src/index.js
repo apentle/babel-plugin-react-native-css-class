@@ -1,22 +1,43 @@
 'use strict';
 
-const babylon = require('babylon');
+const libName = '_apTheme';
 
 module.exports = function ({types: t}) {
-  var progPath, module, pragma;
+  var progPath, mod, pragma, expression;
   var style, css;
 
   return {
     visitor: {
       JSXOpeningElement: {
         exit(path, state) {
-          if (css != null && t.isLiteral(css.node.value)) {
-            // Process css class for current Component
-            var classes = css.node.value.value.split(" ").filter(function(name){
-              return name.length != 0;
-            }).map(function(name){
-              return t.memberExpression(pragma, t.identifier(name));
-            });
+          if (css != null) {
+            // Add header if needed
+            if (progPath != null) {
+              progPath.unshiftContainer('body', t.importDeclaration(
+                [t.importDefaultSpecifier(t.identifier(libName))],
+                t.stringLiteral(mod)
+              ));
+              progPath = null;
+            }
+            // Process classes
+            var classes = [];
+            if (t.isLiteral(css.node.value)) {
+              // string classes
+              classes = css.node.value.value.split(" ").filter(function(name){
+                return name.length != 0;
+              }).map(function(name){
+                return t.memberExpression(pragma, t.identifier(name));
+              });
+            } else if (t.isJSXExpressionContainer(css.node.value)) {
+              // expression classes
+              if (expression != null) {
+                classes.push(t.callExpression(expression, [css.node.value.expression]));
+              } else if (t.isArrayExpression(css.node.value.expression)) {
+                classes = classes.concat(css.node.value.expression.elements);
+              } else {
+                classes.push(css.node.value.expression);
+              }
+            }
             if (style == null) {
               style = css;
               style.node.name.name = 'style';
@@ -28,15 +49,15 @@ module.exports = function ({types: t}) {
               }
               css.remove();
             }
-            style.node.value = t.JSXExpressionContainer(t.ArrayExpression(classes));
+            if (classes.length == 0) {
+              style.remove();
+            } else if (classes.length == 1) {
+              style.node.value = t.JSXExpressionContainer(classes[0]);
+            } else {
+              style.node.value = t.JSXExpressionContainer(t.ArrayExpression(classes));
+            }
+            // Reset temp variants
             css = null;
-            // Add header if needed
-            if (progPath != null) {
-              progPath.unshiftContainer('body', babylon.parse(
-                `import _apTheme from '${module}';`,
-                {sourceType: "module"}));
-              progPath = null;
-            };
           }
           style = null;
         }
@@ -49,21 +70,23 @@ module.exports = function ({types: t}) {
         }
       },
       Program: function Program(path, state) {
-          // console.log(state.file);
-          // Init rule for update layout
-          module = state.opts.module;
-          if (module != null) {
-            pragma = '_apTheme.styles';
-            progPath = path;
-          } else {
-            pragma = state.opts.pragma || 'styles';
-          }
+        // Init rule for update layout
+        mod = state.opts.module;
+        pragma = state.opts.pragma;
+        if (mod != null) {
+          pragma = t.memberExpression(t.identifier(libName), t.identifier('styles'));
+          expression = t.memberExpression(t.identifier(libName), t.identifier('css'));
+          progPath = path;
+        } else if (pragma != null) {
           pragma = pragma.split(".").map(function (name) {
-              return t.identifier(name);
+            return t.identifier(name);
           }).reduce(function (object, property) {
-              return t.memberExpression(object, property);
+            return t.memberExpression(object, property);
           });
+        } else {
+          pragma = t.identifier('styles');
         }
+      }
     }
   };
 }
