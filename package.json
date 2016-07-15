@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-react-native-css-class",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Use class tag in React Native Component",
   "main": "lib/index.js",
   "scripts": {

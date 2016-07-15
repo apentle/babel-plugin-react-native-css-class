@@ -1,6 +1,7 @@
 'use strict';
 
-import _apTheme from 'react-native-theme';
+var _apTheme = require('react-native-theme');
+
 import React, { Component, StyleSheet, Text, View } from 'react-native';
 
 class Lib extends Component {

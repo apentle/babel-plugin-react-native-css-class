@@ -13,9 +13,12 @@ module.exports = function ({types: t}) {
           if (css != null) {
             // Add header if needed
             if (progPath != null) {
-              progPath.unshiftContainer('body', t.importDeclaration(
-                [t.importDefaultSpecifier(t.identifier(libName))],
-                t.stringLiteral(mod)
+              progPath.unshiftContainer('body', t.variableDeclaration(
+                'var',
+                [t.variableDeclarator(
+                  t.identifier(libName),
+                  t.callExpression(t.identifier('require'), [t.stringLiteral(mod)])
+                )]
               ));
               progPath = null;
             }
@@ -24,7 +27,7 @@ module.exports = function ({types: t}) {
             if (t.isLiteral(css.node.value)) {
               // string classes
               classes = css.node.value.value.split(" ").filter(function(name){
-                return name.length != 0;
+                return name.length !== 0;
               }).map(function(name){
                 return t.memberExpression(pragma, t.identifier(name));
               });
@@ -49,9 +52,9 @@ module.exports = function ({types: t}) {
               }
               css.remove();
             }
-            if (classes.length == 0) {
+            if (classes.length === 0) {
               style.remove();
-            } else if (classes.length == 1) {
+            } else if (classes.length === 1) {
               style.node.value = t.JSXExpressionContainer(classes[0]);
             } else {
               style.node.value = t.JSXExpressionContainer(t.ArrayExpression(classes));
@@ -63,9 +66,9 @@ module.exports = function ({types: t}) {
         }
       },
       JSXAttribute: function JSXAttribute(path, state) {
-        if (path.node.name.name == 'class') {
+        if (path.node.name.name === 'class') {
           css = path;
-        } else if (path.node.name.name == 'style') {
+        } else if (path.node.name.name === 'style') {
           style = path;
         }
       },
